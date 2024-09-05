@@ -1,0 +1,22 @@
+{
+  "id": "c8987b02-f01e-00af-4245-f7c5b4068622",
+  "source": "/subscriptions/4945988a-xxxx-xxxxx-xxxxx-xxxxxxx/resourceGroups/xx-entra-logs/providers/Microsoft.Storage/storageAccounts/entralogs",
+  "specversion": "1.0",
+  "type": "Microsoft.Storage.BlobCreated",
+  "subject": "/blobServices/default/containers/xxx-logs/blobs/tenantId=1yyyyy-yyyy-yyyy-yyyyyyyyyyyy/y=2024/m=08/d=25/h=23/m=00/PT1H.json",
+  "time": "2024-08-25T23:22:13.0017573Z",
+  "data": {
+    "api": "PutBlob",
+    "clientRequestId": "aaaaaaa-465c-4d7f-84f0-8467c917adfd",
+    "requestId": "bbbbbb-f01e-00af-4245-f7c5b4000000",
+    "eTag": "0xEEEEEEEEEEEEEEEE",
+    "contentType": "application/octet-stream",
+    "contentLength": 0,
+    "blobType": "AppendBlob",
+    "url": "https://entralogs.blob.core.windows.net/xxx-logs/tenantId=1yyyyy-yyyy-yyyy-yyyyyyyyyyyy/y=2024/m=08/d=25/h=23/m=00/PT1H.json",
+    "sequencer": "00000000000000000000000000010E8300000000000f3b75",
+    "storageDiagnostics": {
+      "batchId": "cccccc-cccc-cccc-cccc-cccccccccccc"
+    }
+  }
+}
