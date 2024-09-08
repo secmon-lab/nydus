@@ -22,13 +22,8 @@ jobs:
         with:
           # we let the report trigger content trigger a failure using the GitHub Security features.
           args: "-no-fail -fmt sarif -out results.sarif ./..."
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          # Path to SARIF file relative to the root of the repository
-          sarif_file: results.sarif
 
-      - name: Upload Trivy scan results to GitHub Security tab
+      - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@e8893c57a1f3a2b659b6b55564fdfdbbd2982911 # v3.24.0
         with:
           sarif_file: "results.sarif"
