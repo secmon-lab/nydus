@@ -1,7 +1,7 @@
 package model
 
 type RouteInput struct {
-	BlobStorage *AzureBlobStorageEvent `json:"blob_storage"`
+	AzureBlobStorage *AzureBlobStorageEvent `json:"abs"`
 }
 
 type RouteOutput struct {

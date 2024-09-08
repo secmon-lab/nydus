@@ -10,7 +10,6 @@ const (
 
 // AzureBlobStorageEvent is a struct for Azure Blob Storage event
 type AzureBlobStorageEvent struct {
-	Type   StorageType            `json:"type"`
 	Event  CloudEventSchema       `json:"event"`
 	Object AzureBlobStorageObject `json:"object"`
 }
