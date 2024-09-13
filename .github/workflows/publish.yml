@@ -4,10 +4,10 @@ on:
   push:
 
 env:
-  TAG_NAME: locust:${{ github.sha }}
+  TAG_NAME: nydus:${{ github.sha }}
   BUILD_VERSION: ${{ github.sha }}
-  GITHUB_IMAGE_REPO: ghcr.io/${{ github.repository_owner }}/locust
-  GITHUB_IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/locust:${{ github.sha }}
+  GITHUB_IMAGE_REPO: ghcr.io/${{ github.repository_owner }}/nydus
+  GITHUB_IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/nydus:${{ github.sha }}
 
 jobs:
   build:

@@ -2,8 +2,8 @@ package cli
 
 import (
 	"github.com/m-mizutani/goerr"
-	"github.com/secmon-as-code/locust/pkg/cli/config"
-	"github.com/secmon-as-code/locust/pkg/domain/context/logging"
+	"github.com/secmon-as-code/nydus/pkg/cli/config"
+	"github.com/secmon-as-code/nydus/pkg/domain/context/logging"
 	"github.com/urfave/cli/v2"
 )
 
@@ -14,7 +14,7 @@ func Run(argv []string) error {
 	flags = append(flags, loggingCfg.Flags()...)
 
 	app := cli.App{
-		Name:  "locust",
+		Name:  "nydus",
 		Flags: flags,
 		Commands: []*cli.Command{
 			cmdServe(),

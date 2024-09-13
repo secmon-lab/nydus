@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"github.com/secmon-as-code/locust/pkg/adapter"
+	"github.com/secmon-as-code/nydus/pkg/adapter"
 )
 
 type UseCase struct {

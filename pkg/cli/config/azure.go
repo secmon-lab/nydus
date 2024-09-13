@@ -2,8 +2,8 @@ package config
 
 import (
 	"github.com/m-mizutani/goerr"
-	"github.com/secmon-as-code/locust/pkg/adapter/abs"
-	"github.com/secmon-as-code/locust/pkg/domain/context/logging"
+	"github.com/secmon-as-code/nydus/pkg/adapter/abs"
+	"github.com/secmon-as-code/nydus/pkg/domain/context/logging"
 	"github.com/urfave/cli/v2"
 )
 
@@ -22,7 +22,7 @@ func (x *Azure) Flags() []cli.Flag {
 			Name:        "enable-azure",
 			Usage:       "Enable Azure Blob Storage",
 			Category:    category,
-			EnvVars:     []string{"LOCUST_ENABLE_AZURE"},
+			EnvVars:     []string{"NYDUS_ENABLE_AZURE"},
 			Destination: &x.enable,
 		},
 
@@ -30,21 +30,21 @@ func (x *Azure) Flags() []cli.Flag {
 			Name:        "azure-tenant-id",
 			Usage:       "Azure tenant ID",
 			Category:    category,
-			EnvVars:     []string{"LOCUST_AZURE_TENANT_ID"},
+			EnvVars:     []string{"NYDUS_AZURE_TENANT_ID"},
 			Destination: &x.tenantID,
 		},
 		&cli.StringFlag{
 			Name:        "azure-client-id",
 			Usage:       "Azure client ID",
 			Category:    category,
-			EnvVars:     []string{"LOCUST_AZURE_CLIENT_ID"},
+			EnvVars:     []string{"NYDUS_AZURE_CLIENT_ID"},
 			Destination: &x.clientID,
 		},
 		&cli.StringFlag{
 			Name:        "azure-client-secret",
 			Usage:       "Azure client secret",
 			Category:    category,
-			EnvVars:     []string{"LOCUST_AZURE_CLIENT_SECRET"},
+			EnvVars:     []string{"NYDUS_AZURE_CLIENT_SECRET"},
 			Destination: &x.clientSecret,
 		},
 	}

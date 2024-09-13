@@ -3,7 +3,7 @@ package interfaces
 import (
 	"context"
 
-	"github.com/secmon-as-code/locust/pkg/domain/model"
+	"github.com/secmon-as-code/nydus/pkg/domain/model"
 )
 
 type UseCase interface {

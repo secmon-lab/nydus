@@ -1,4 +1,4 @@
-module github.com/secmon-as-code/locust
+module github.com/secmon-as-code/nydus
 
 go 1.23.0
 

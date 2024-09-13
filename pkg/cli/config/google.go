@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/m-mizutani/goerr"
-	"github.com/secmon-as-code/locust/pkg/adapter/gcs"
+	"github.com/secmon-as-code/nydus/pkg/adapter/gcs"
 	"github.com/urfave/cli/v2"
 	"google.golang.org/api/option"
 )
@@ -20,14 +20,14 @@ func (x *GoogleCloudStorage) Flags() []cli.Flag {
 			Name:        "enable-gcs",
 			Usage:       "Enable Google Cloud Storage",
 			Category:    category,
-			EnvVars:     []string{"LOCUST_ENABLE_GCS"},
+			EnvVars:     []string{"NYDUS_ENABLE_GCS"},
 			Destination: &x.enable,
 		},
 		&cli.StringFlag{
 			Name:        "gcs-credential-file",
 			Usage:       "Google Cloud Storage credential file",
 			Category:    category,
-			EnvVars:     []string{"LOCUST_GCS_CREDENTIAL_FILE"},
+			EnvVars:     []string{"NYDUS_GCS_CREDENTIAL_FILE"},
 			Destination: &x.credentialFile,
 		},
 	}

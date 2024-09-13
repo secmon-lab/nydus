@@ -5,11 +5,11 @@ import (
 
 	"github.com/m-mizutani/goerr"
 	"github.com/m-mizutani/opac"
-	"github.com/secmon-as-code/locust/pkg/adapter"
-	"github.com/secmon-as-code/locust/pkg/cli/config"
-	"github.com/secmon-as-code/locust/pkg/controller/server"
-	"github.com/secmon-as-code/locust/pkg/domain/context/logging"
-	"github.com/secmon-as-code/locust/pkg/usecase"
+	"github.com/secmon-as-code/nydus/pkg/adapter"
+	"github.com/secmon-as-code/nydus/pkg/cli/config"
+	"github.com/secmon-as-code/nydus/pkg/controller/server"
+	"github.com/secmon-as-code/nydus/pkg/domain/context/logging"
+	"github.com/secmon-as-code/nydus/pkg/usecase"
 	"github.com/urfave/cli/v2"
 )
 
@@ -23,7 +23,7 @@ func cmdServe() *cli.Command {
 		&cli.StringFlag{
 			Name:        "addr",
 			Aliases:     []string{"a"},
-			EnvVars:     []string{"LOCUST_ADDR"},
+			EnvVars:     []string{"NYDUS_ADDR"},
 			Usage:       "Address to listen",
 			Value:       "127.0.0.1:8080",
 			Destination: &addr,
@@ -31,7 +31,7 @@ func cmdServe() *cli.Command {
 		&cli.StringFlag{
 			Name:        "policy-dir",
 			Aliases:     []string{"p"},
-			EnvVars:     []string{"LOCUST_POLICY_DIR"},
+			EnvVars:     []string{"NYDUS_POLICY_DIR"},
 			Usage:       "Directory path of policy files",
 			Value:       "policy",
 			Destination: &policyDir,
@@ -48,7 +48,7 @@ func cmdServe() *cli.Command {
 	return &cli.Command{
 		Name:    "serve",
 		Aliases: []string{"s"},
-		Usage:   "Start locust server",
+		Usage:   "Start nydus server",
 		Flags:   flags,
 		Action: func(ctx *cli.Context) error {
 			policy, err := opac.New(opac.Files(policyDir))
