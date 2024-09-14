@@ -169,6 +169,8 @@ github.com/m-mizutani/goerr v0.1.14 h1:qwJ4wGoZWiHOGX/CJFvQyLRXK49EVyhOcVKAqxS/w
 github.com/m-mizutani/goerr v0.1.14/go.mod h1:OoNepSLW5oF3dQWWZ3D2lVOTbzRsePvc6LrqhXcff5Y=
 github.com/m-mizutani/gt v0.0.10 h1:gJsRcZ0R0kcVAGeahwDAVBCDCwOA/tFw3N1/kh3DnAY=
 github.com/m-mizutani/gt v0.0.10/go.mod h1:0MPYSfGBLmYjTduzADVmIqD58ELQ5IfBFiK/f0FmB3k=
+github.com/m-mizutani/gt v0.0.11 h1:33DOxYGCBHR9Ne7sCpNk7pITyfFE7Dm5JnjoH/XdcVM=
+github.com/m-mizutani/gt v0.0.11/go.mod h1:0MPYSfGBLmYjTduzADVmIqD58ELQ5IfBFiK/f0FmB3k=
 github.com/m-mizutani/opac v0.2.0 h1:VZdC0zK4Ls3JtnO812EIqzbKL0KKE4Cvy/jAKOmJN1U=
 github.com/m-mizutani/opac v0.2.0/go.mod h1:L3oBhXqkb3yjYX0s1/IdI+lvZAm4PwBeXnjpMOZoH5Q=
 github.com/mattn/go-colorable v0.1.13 h1:fFA4WZxdEF4tXPZVKMLwD8oUnCTTo08duU7wxecdEvA=
