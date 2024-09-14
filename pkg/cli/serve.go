@@ -2,6 +2,7 @@ package cli
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/m-mizutani/goerr"
 	"github.com/m-mizutani/opac"
@@ -78,10 +79,19 @@ func cmdServe() *cli.Command {
 
 			uc := usecase.New(clients)
 
-			srv := server.New(uc)
+			mux := server.New(uc)
 
 			logging.Default().Info("starting server", "addr", addr, "policyDir", policyDir)
-			if err := http.ListenAndServe(addr, srv); err != nil {
+
+			httpServer := &http.Server{
+				ReadTimeout:  20 * time.Second,
+				WriteTimeout: 20 * time.Second,
+				IdleTimeout:  120 * time.Second,
+				Handler:      mux,
+				Addr:         addr,
+			}
+
+			if err := httpServer.ListenAndServe(); err != nil {
 				return goerr.Wrap(err, "fail to start server")
 			}
 
