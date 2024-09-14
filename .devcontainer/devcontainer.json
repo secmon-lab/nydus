@@ -1,4 +1,6 @@
 {
+  "name": "nydus-dev-container",
+  "image": "ubuntu",
   "features": {
     "ghcr.io/devcontainers/features/aws-cli:1": {},
     "ghcr.io/dhoeric/features/google-cloud-cli:1": {},
