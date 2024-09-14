@@ -115,6 +115,8 @@ The `input` variable has the following structure:
         - `content_type`: The object content type.
         - `etag`: The object ETag.
     - `event`: This field contains original Azure Event Grid notification data. See [Azure Event Grid schema](https://docs.microsoft.com/en-us/azure/event-grid/event-schema-blob-storage?tabs=event-grid) for more details.
+- `gcs`: To be supported soon.
+- `s3`: To be supported soon.
 
 ### Output data
 
@@ -123,6 +125,8 @@ The Rego policy should return the destination storage service information as a s
 - `gcs`: The destination storage service is Google Cloud Storage. The variable must be [Set](https://www.openpolicyagent.org/docs/latest/policy-language/#sets) type and contain the following fields:
     - `bucket`: The destination bucket name.
     - `name`: The object path in the destination bucket.
+- `s3`: To be supported soon.
+- `abs`: To be supported soon.
 
 ## License
 
