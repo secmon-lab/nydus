@@ -28,6 +28,12 @@ Overview of the data transfer process:
 
 ## Getting Started
 
+### Prerequisites
+
+- For Google Cloud: You need Service Account to access Google Cloud Storage.
+- For Azure: You need App to access Azure Blob Storage.
+- For AWS: You need IAM Service Account to access Amazon S3.
+
 ### Write a Rego policy
 
 Write a Rego policy that describes the routing rules for the object data transfer. The policy should return the destination storage service and the destination bucket name.
@@ -66,6 +72,25 @@ ENV NYDUS_ADDR=:8080
 
 ENTRYPOINT ["/nydus" , "serve"]
 ```
+
+The `nydus` binary is located at `/nydus` in the container image. The Rego policy should be copied to the `/policy` directory in the container image.
+
+Environment variables for the `nydus` binary:
+
+- `NYDUS_POLICY_DIR` (required): The directory that contains the Rego policy files.
+- `NYDUS_ADDR` (optional): The address that `nydus` listens to. The default value is `127.0.0.1:8080`. You need to set this environment variable to exposed binding address, such as `:8080` to listen to all interfaces.
+- `NYDUS_LOG_LEVEL` (optional): The log level of `nydus`. The default value is `info`.
+- `NYDUS_LOG_FORMAT` (optional): The log format of `nydus`. You can choose `console` or `json`. The default value is `json`.
+- `NYDUS_ENABLE_GCS` (optional): Enable Google Cloud Storage client. It's required for both of download and upload an object. The default value is `false`. Following environment variables are required when `NYDUS_ENABLE_GCS` is `true`.
+  - `NYDUS_GCS_CREDENTIAL_FILE` (optional): The path to the Google Cloud Service Account credential file. It's basically not needed when the application is running on Google Cloud Platform.
+- `NYDUS_ENABLE_AZURE` (optional): Enable Azure Blob Storage client. It's required for both of download and upload an object. The default value is `false`. Following environment variables are required when `NYDUS_ENABLE_AZURE` is `true`.
+  - `NYDUS_AZURE_TENANT_ID` (required): The Azure Tenant ID.
+  - `NYDUS_AZURE_CLIENT_ID` (required): The Azure Client ID for the App.
+  - `NYDUS_AZURE_CLIENT_SECRET` (required): The Azure Client Secret for the App.
+
+### Deploy your container image
+
+Deploy the container image to your container platform, such as Kubernetes, Docker, or any other container platform. We recommend using [Cloud Run](https://cloud.google.com/run?hl=en) on Google Cloud Platform, as it is a serverless container platform that can scale automatically.
 
 ## How to write a Rego policy
 
