@@ -18,8 +18,9 @@ type AzureBlobStorageObject struct {
 	StorageAccount string `json:"storage_account"`
 	Container      string `json:"container"`
 	BlobName       string `json:"blob_name"`
-	ContentLength  int64  `json:"contentLength"`
-	ContentType    string `json:"contentType"`
+	Size           int64  `json:"size"`
+	ContentType    string `json:"content_type"`
+	ETag           string `json:"etag"`
 }
 
 // CloudEventSchema is a struct for Azure Event Grid CloudEvent schema

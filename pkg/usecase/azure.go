@@ -76,8 +76,9 @@ func (x *UseCase) HandleAzureCloudEvent(ctx context.Context, ev *model.CloudEven
 				StorageAccount: source[8],
 				Container:      subject[4],
 				BlobName:       strings.Join(subject[6:], "/"),
-				ContentLength:  ev.Data.ContentLength,
+				Size:           ev.Data.ContentLength,
 				ContentType:    ev.Data.ContentType,
+				ETag:           ev.Data.ETag,
 			},
 		},
 	}
