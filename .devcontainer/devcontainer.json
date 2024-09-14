@@ -1,3 +1,7 @@
 {
-  "build": { "dockerfile": "Dockerfile" }
+  "features": {
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/dhoeric/features/google-cloud-cli:1": {},
+    "ghcr.io/devcontainers/features/go:1": {}
+  }
 }
