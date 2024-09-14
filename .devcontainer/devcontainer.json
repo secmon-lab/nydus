@@ -1,6 +1,6 @@
 {
   "name": "nydus-dev-container",
-  "image": "ubuntu",
+  "image": "mcr.microsoft.com/vscode/devcontainers/base:1-jammy",
   "features": {
     "ghcr.io/devcontainers/features/aws-cli:1": {},
     "ghcr.io/dhoeric/features/google-cloud-cli:1": {},
