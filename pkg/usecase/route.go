@@ -51,7 +51,18 @@ func newReaderFromRouteInput(ctx context.Context, clients *adapter.Clients, inpu
 			input.AzureBlobStorage.Object.Container,
 			input.AzureBlobStorage.Object.BlobName,
 		)
+	case input.GoogleCloudStorage != nil:
+		return clients.GoogleCloudStorage().NewReader(ctx,
+			input.GoogleCloudStorage.Object.Bucket,
+			input.GoogleCloudStorage.Object.Name,
+		)
 
+	case input.AmazonS3 != nil:
+		return clients.AmazonS3().NewReader(ctx,
+			input.AmazonS3.Object.Region,
+			input.AmazonS3.Object.Bucket,
+			input.AmazonS3.Object.Key,
+		)
 	default:
 		return nil, goerr.New("unsupported route input")
 	}

@@ -10,8 +10,10 @@ import (
 type Clients struct {
 	httpClient interfaces.HTTPClient
 	query      *opac.Client
-	gcsClient  interfaces.GoogleCloudStorage
-	absClient  interfaces.AzureBlobStorage
+
+	gcsClient interfaces.GoogleCloudStorage
+	absClient interfaces.AzureBlobStorage
+	s3Client  interfaces.AmazonS3
 }
 
 func (x *Clients) HTTPClient() interfaces.HTTPClient { return x.httpClient }
@@ -22,6 +24,7 @@ func (x *Clients) GoogleCloudStorage() interfaces.GoogleCloudStorage {
 func (x *Clients) AzureBlobStorage() interfaces.AzureBlobStorage {
 	return x.absClient
 }
+func (x *Clients) AmazonS3() interfaces.AmazonS3 { return x.s3Client }
 
 func New(options ...Option) *Clients {
 	clients := &Clients{
@@ -58,5 +61,11 @@ func WithGoogleCloudStorage(client interfaces.GoogleCloudStorage) Option {
 func WithAzureBlobStorage(client interfaces.AzureBlobStorage) Option {
 	return func(c *Clients) {
 		c.absClient = client
+	}
+}
+
+func WithAmazonS3(client interfaces.AmazonS3) Option {
+	return func(c *Clients) {
+		c.s3Client = client
 	}
 }

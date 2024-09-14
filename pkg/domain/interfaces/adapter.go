@@ -15,5 +15,11 @@ type AzureBlobStorage interface {
 }
 
 type GoogleCloudStorage interface {
+	NewReader(ctx context.Context, bucketName, objectName string) (io.ReadCloser, error)
 	NewWriter(ctx context.Context, bucketName, objectName string) (io.WriteCloser, error)
+}
+
+type AmazonS3 interface {
+	NewReader(ctx context.Context, region, bucket, key string) (io.ReadCloser, error)
+	NewWriter(ctx context.Context, region, bucket, key string) (io.WriteCloser, error)
 }

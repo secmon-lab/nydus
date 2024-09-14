@@ -46,13 +46,30 @@ type CloudEventSchema struct {
 	Type        string `json:"type"`
 }
 
+type GoogleCloudStorageEvent struct {
+	Event  GooglePubSubEvent        `json:"event"`
+	Object GoogleCloudStorageObject `json:"object"`
+}
+
 // GoogleCloudStorageObject is a struct for Google Cloud Storage object
 type GoogleCloudStorageObject struct {
 	Bucket string `json:"bucket"`
 	Name   string `json:"name"`
 }
 
+type GooglePubSubEvent struct {
+}
+
+type AmazonS3Event struct {
+	Event  AmazonSNSEvent `json:"event"`
+	Object AmazonS3Object `json:"object"`
+}
+
+type AmazonSNSEvent struct {
+}
+
 type AmazonS3Object struct {
+	Region string `json:"region"`
 	Bucket string `json:"bucket"`
-	Name   string `json:"name"`
+	Key    string `json:"key"`
 }
