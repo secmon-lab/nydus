@@ -25,7 +25,7 @@ func (x *UseCase) ValidateAzureEventGrid(ctx context.Context, callbackURL string
 		return goerr.New("Webhook-Request-Callback is invalid")
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, callbackURL, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, callbackURL, nil)
 	if err != nil {
 		return goerr.Wrap(err, "failed to create HTTP request").With("callbackURL", callbackURL)
 	}
@@ -40,7 +40,13 @@ func (x *UseCase) ValidateAzureEventGrid(ctx context.Context, callbackURL string
 		return goerr.New("callbackURL response is not OK").With("statusCode", resp.StatusCode).With("body", string(body)).With("callbackURL", callbackURL)
 	}
 
-	logging.From(ctx).Info("Successfully validated Azure EventGrid", "callbackURL", callbackURL)
+	body, _ := io.ReadAll(resp.Body)
+
+	logging.From(ctx).Info("Successfully validated Azure EventGrid",
+		"callbackURL", callbackURL,
+		"statusCode", resp.StatusCode,
+		"body", string(body),
+	)
 
 	return nil
 }
