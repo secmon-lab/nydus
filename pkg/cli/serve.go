@@ -76,7 +76,7 @@ func cmdServe() *cli.Command {
 			}
 
 			clients := adapter.New(adaptorOptions...)
-
+			logging.Default().Debug("create clients", "clients", clients)
 			uc := usecase.New(clients)
 
 			mux := server.New(uc)

@@ -9,6 +9,7 @@ import (
 	"github.com/secmon-as-code/nydus/pkg/domain/context/logging"
 	"github.com/secmon-as-code/nydus/pkg/domain/interfaces"
 	"github.com/secmon-as-code/nydus/pkg/domain/model"
+	"github.com/secmon-as-code/nydus/pkg/usecase"
 )
 
 type Server struct {
@@ -21,6 +22,10 @@ func (x *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func New(uc interfaces.UseCase) *Server {
 	route := chi.NewRouter()
+
+	if v, ok := uc.(*usecase.UseCase); ok {
+		logging.Default().Debug("[tmp] check client: new server", "client", v.Clients())
+	}
 
 	route.Route("/google/pubsub", func(r chi.Router) {
 		r.Post("/cloud-storage", func(w http.ResponseWriter, r *http.Request) {
@@ -59,6 +64,9 @@ func handleAzureEventGridMessage(uc interfaces.UseCase) http.HandlerFunc {
 			logger.Warn("failed to unmarshal request body from Azure", "err", err, "body", string(body))
 			http.Error(w, "bad request", http.StatusBadRequest)
 			return
+		}
+		if v, ok := uc.(*usecase.UseCase); ok {
+			logger.Debug("[tmp] check client: received Azure CloudEvent", "client", v.Clients())
 		}
 
 		if ev.Type == "Microsoft.Storage.BlobCreated" {

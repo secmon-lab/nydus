@@ -13,3 +13,7 @@ func New(clients *adapter.Clients) *UseCase {
 		clients: clients,
 	}
 }
+
+func (x *UseCase) Clients() *adapter.Clients {
+	return x.clients
+}
