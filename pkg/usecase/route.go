@@ -44,6 +44,8 @@ func (x *UseCase) Route(ctx context.Context, input *model.RouteInput) error {
 }
 
 func newReaderFromRouteInput(ctx context.Context, clients *adapter.Clients, input *model.RouteInput) (io.ReadCloser, error) {
+	logging.From(ctx).Info("Create reader from route input", "input", input, "clients", clients)
+
 	switch {
 	case input.AzureBlobStorage != nil:
 		return clients.AzureBlobStorage().NewReader(ctx,
