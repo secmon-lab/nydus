@@ -14,7 +14,9 @@ func (x *UseCase) Route(ctx context.Context, input *model.RouteInput) error {
 	var output model.RouteOutput
 
 	logger := logging.From(ctx)
-	logger.Debug("Route query", "input", input)
+	logger.Debug("Route query", "input", input, "clients", x.clients)
+	logger.Debug("[tmp] client", "clients", x.clients)
+
 	if err := x.clients.Query().Query(ctx, "data.route", input, &output); err != nil {
 		return goerr.Wrap(err, "failed to route query").With("input", input)
 	}
@@ -44,6 +46,8 @@ func (x *UseCase) Route(ctx context.Context, input *model.RouteInput) error {
 }
 
 func newReaderFromRouteInput(ctx context.Context, clients *adapter.Clients, input *model.RouteInput) (io.ReadCloser, error) {
+	logging.From(ctx).Info("Create reader from route input", "input", input, "clients", clients)
+
 	switch {
 	case input.AzureBlobStorage != nil:
 		return clients.AzureBlobStorage().NewReader(ctx,
