@@ -1,6 +1,7 @@
 package adapter
 
 import (
+	"log/slog"
 	"net/http"
 
 	"github.com/m-mizutani/opac"
@@ -14,6 +15,16 @@ type Clients struct {
 	gcsClient interfaces.GoogleCloudStorage
 	absClient interfaces.AzureBlobStorage
 	s3Client  interfaces.AmazonS3
+}
+
+func (x *Clients) LogValue() slog.Value {
+	return slog.GroupValue(
+		slog.Bool("HTTPClient", x.httpClient != nil),
+		slog.Bool("Query", x.query != nil),
+		slog.Bool("GoogleCloudStorage", x.gcsClient != nil),
+		slog.Bool("AzureBlobStorage", x.absClient != nil),
+		slog.Bool("AmazonS3", x.s3Client != nil),
+	)
 }
 
 func (x *Clients) HTTPClient() interfaces.HTTPClient { return x.httpClient }
