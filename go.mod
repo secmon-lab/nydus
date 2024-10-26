@@ -1,4 +1,4 @@
-module github.com/secmon-as-code/nydus
+module github.com/secmon-lab/nydus
 
 go 1.23.0
 
@@ -10,8 +10,10 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.61.2
 	github.com/fatih/color v1.17.0
 	github.com/go-chi/chi/v5 v5.1.0
+	github.com/google/uuid v1.6.0
 	github.com/m-mizutani/clog v0.0.7
 	github.com/m-mizutani/goerr v0.1.14
+	github.com/m-mizutani/gt v0.0.11
 	github.com/m-mizutani/opac v0.2.0
 	github.com/urfave/cli/v2 v2.27.4
 	google.golang.org/api v0.197.0
@@ -49,13 +51,11 @@ require (
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/s2a-go v0.1.8 // indirect
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.4 // indirect
 	github.com/googleapis/gax-go/v2 v2.13.0 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/k0kubun/pp/v3 v3.2.0 // indirect
 	github.com/kylelemons/godebug v1.1.0 // indirect
-	github.com/m-mizutani/gt v0.0.11 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect

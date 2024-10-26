@@ -6,11 +6,11 @@ import (
 
 	"github.com/m-mizutani/goerr"
 	"github.com/m-mizutani/opac"
-	"github.com/secmon-as-code/nydus/pkg/adapter"
-	"github.com/secmon-as-code/nydus/pkg/cli/config"
-	"github.com/secmon-as-code/nydus/pkg/controller/server"
-	"github.com/secmon-as-code/nydus/pkg/domain/context/logging"
-	"github.com/secmon-as-code/nydus/pkg/usecase"
+	"github.com/secmon-lab/nydus/pkg/adapter"
+	"github.com/secmon-lab/nydus/pkg/cli/config"
+	"github.com/secmon-lab/nydus/pkg/controller/server"
+	"github.com/secmon-lab/nydus/pkg/domain/context/logging"
+	"github.com/secmon-lab/nydus/pkg/usecase"
 	"github.com/urfave/cli/v2"
 )
 

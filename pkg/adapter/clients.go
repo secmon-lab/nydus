@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/m-mizutani/opac"
-	"github.com/secmon-as-code/nydus/pkg/domain/interfaces"
+	"github.com/secmon-lab/nydus/pkg/domain/interfaces"
 )
 
 type Clients struct {

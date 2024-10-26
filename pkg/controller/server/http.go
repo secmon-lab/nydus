@@ -6,9 +6,9 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/secmon-as-code/nydus/pkg/domain/context/logging"
-	"github.com/secmon-as-code/nydus/pkg/domain/interfaces"
-	"github.com/secmon-as-code/nydus/pkg/domain/model"
+	"github.com/secmon-lab/nydus/pkg/domain/context/logging"
+	"github.com/secmon-lab/nydus/pkg/domain/interfaces"
+	"github.com/secmon-lab/nydus/pkg/domain/model"
 )
 
 type Server struct {

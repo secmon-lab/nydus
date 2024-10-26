@@ -62,7 +62,7 @@ See [How to Write a Rego Policy](#how-to-write-a-rego-policy) for more details.
 Create a container image that includes the Rego policy and the `nydus` binary. `nydus` provides a Docker image containing the `nydus` binary from the GitHub Container Registry. You can use this image as a base and copy the Rego policy into it.
 
 ```Dockerfile
-FROM ghcr.io/secmon-as-code/nydus:latest
+FROM ghcr.io/secmon-lab/nydus:latest
 
 # Assumes that the Rego policy is in the "policy" directory.
 COPY policy /policy

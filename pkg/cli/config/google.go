@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/m-mizutani/goerr"
-	"github.com/secmon-as-code/nydus/pkg/adapter/gcs"
+	"github.com/secmon-lab/nydus/pkg/adapter/gcs"
 	"github.com/urfave/cli/v2"
 	"google.golang.org/api/option"
 )

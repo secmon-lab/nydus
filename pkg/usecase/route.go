@@ -5,9 +5,9 @@ import (
 	"io"
 
 	"github.com/m-mizutani/goerr"
-	"github.com/secmon-as-code/nydus/pkg/adapter"
-	"github.com/secmon-as-code/nydus/pkg/domain/context/logging"
-	"github.com/secmon-as-code/nydus/pkg/domain/model"
+	"github.com/secmon-lab/nydus/pkg/adapter"
+	"github.com/secmon-lab/nydus/pkg/domain/context/logging"
+	"github.com/secmon-lab/nydus/pkg/domain/model"
 )
 
 func (x *UseCase) Route(ctx context.Context, input *model.RouteInput) error {

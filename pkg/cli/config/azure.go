@@ -2,8 +2,8 @@ package config
 
 import (
 	"github.com/m-mizutani/goerr"
-	"github.com/secmon-as-code/nydus/pkg/adapter/abs"
-	"github.com/secmon-as-code/nydus/pkg/domain/context/logging"
+	"github.com/secmon-lab/nydus/pkg/adapter/abs"
+	"github.com/secmon-lab/nydus/pkg/domain/context/logging"
 	"github.com/urfave/cli/v2"
 )
 

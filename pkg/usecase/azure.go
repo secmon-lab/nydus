@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/m-mizutani/goerr"
-	"github.com/secmon-as-code/nydus/pkg/domain/context/logging"
-	"github.com/secmon-as-code/nydus/pkg/domain/model"
+	"github.com/secmon-lab/nydus/pkg/domain/context/logging"
+	"github.com/secmon-lab/nydus/pkg/domain/model"
 )
 
 func (x *UseCase) ValidateAzureEventGrid(ctx context.Context, callbackURL string) error {

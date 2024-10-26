@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/secmon-as-code/nydus/pkg/cli"
+	"github.com/secmon-lab/nydus/pkg/cli"
 )
 
 func main() {

@@ -9,7 +9,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/m-mizutani/gt"
-	"github.com/secmon-as-code/nydus/pkg/adapter/gcs"
+	"github.com/secmon-lab/nydus/pkg/adapter/gcs"
 )
 
 func TestIntegration(t *testing.T) {
