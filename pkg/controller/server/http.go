@@ -138,6 +138,9 @@ func handleAzureEventGridValidate(uc interfaces.UseCase) http.HandlerFunc {
 			return
 		}
 
+		w.Header().Set("Webhook-Allowed-Origin", r.Header.Get("Webhook-Request-Origin"))
+		w.Header().Set("Webhook-Allowed-Rate", "100")
+
 		w.WriteHeader(http.StatusOK)
 	}
 }
