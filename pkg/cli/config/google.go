@@ -1,6 +1,8 @@
 package config
 
 import (
+	"log/slog"
+
 	"github.com/m-mizutani/goerr"
 	"github.com/secmon-lab/nydus/pkg/adapter/gcs"
 	"github.com/urfave/cli/v2"
@@ -31,6 +33,13 @@ func (x *GoogleCloudStorage) Flags() []cli.Flag {
 			Destination: &x.credentialFile,
 		},
 	}
+}
+
+func (x GoogleCloudStorage) LogValue() slog.Value {
+	return slog.GroupValue(
+		slog.Bool("enable", x.enable),
+		slog.String("credentialFile", x.credentialFile),
+	)
 }
 
 func (x *GoogleCloudStorage) NewClient() (*gcs.Client, error) {

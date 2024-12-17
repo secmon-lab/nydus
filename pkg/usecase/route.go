@@ -22,6 +22,10 @@ func (x *UseCase) Route(ctx context.Context, input *model.RouteInput) error {
 
 	for _, dst := range output.GoogleCloudStorage {
 		logger.Debug("Route to Google Cloud Storage", "destination", dst)
+		gcs := x.clients.GoogleCloudStorage()
+		if gcs == nil {
+			return goerr.New("Google Cloud Storage is not enabled").With("destination", dst).With("input", input)
+		}
 
 		r, err := newReaderFromRouteInput(ctx, x.clients, input)
 		if err != nil {
@@ -33,11 +37,18 @@ func (x *UseCase) Route(ctx context.Context, input *model.RouteInput) error {
 		if err != nil {
 			return goerr.Wrap(err, "failed to create writer to Google Cloud Storage").With("destination", dst)
 		}
-		defer w.Close()
+		defer func() {
+			if err := w.Close(); err != nil {
+				logger.Warn("Failed to close writer", "destination", dst, "error", err)
+			}
+		}()
 
-		if _, err := io.Copy(w, r); err != nil {
+		n, err := io.Copy(w, r)
+		if err != nil {
 			return goerr.Wrap(err, "failed to copy from reader to writer")
 		}
+
+		logger.Info("Copied from reader to writer", "destination", dst, "bytes", n)
 	}
 
 	return nil

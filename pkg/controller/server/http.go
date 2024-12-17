@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/google/uuid"
 	"github.com/secmon-lab/nydus/pkg/domain/context/logging"
 	"github.com/secmon-lab/nydus/pkg/domain/interfaces"
 	"github.com/secmon-lab/nydus/pkg/domain/model"
@@ -21,6 +22,7 @@ func (x *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func New(uc interfaces.UseCase) *Server {
 	route := chi.NewRouter()
+	route.Use(middlewareLogging)
 
 	route.Route("/google/pubsub", func(r chi.Router) {
 		r.Post("/cloud-storage", func(w http.ResponseWriter, r *http.Request) {
@@ -40,6 +42,37 @@ func New(uc interfaces.UseCase) *Server {
 	return &Server{
 		route: route,
 	}
+}
+
+type statusWriter struct {
+	http.ResponseWriter
+	status int
+}
+
+func (x *statusWriter) WriteHeader(code int) {
+	x.status = code
+	x.ResponseWriter.WriteHeader(code)
+}
+
+func middlewareLogging(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		reqID := uuid.NewString()
+		ctx := r.Context()
+		logger := logging.From(ctx).With("reqID", reqID)
+
+		ctx = logging.Inject(ctx, logger)
+
+		sw := &statusWriter{ResponseWriter: w}
+		next.ServeHTTP(sw, r.WithContext(ctx))
+
+		logger.Info("request",
+			"method", r.Method,
+			"path", r.URL.Path,
+			"status", sw.status,
+			"remote_addr", r.RemoteAddr,
+			"user_agent", r.UserAgent(),
+		)
+	})
 }
 
 func handleAzureEventGridMessage(uc interfaces.UseCase) http.HandlerFunc {

@@ -52,6 +52,15 @@ func cmdServe() *cli.Command {
 		Usage:   "Start nydus server",
 		Flags:   flags,
 		Action: func(ctx *cli.Context) error {
+
+			logger := logging.Default()
+			logger.Info("start nydus server",
+				"addr", addr,
+				"policyDir", policyDir,
+				"azure", azureCfg,
+				"gcs", gcsCfg,
+			)
+
 			policy, err := opac.New(opac.Files(policyDir))
 			if err != nil {
 				return goerr.Wrap(err, "fail to load policy files")

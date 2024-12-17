@@ -1,6 +1,8 @@
 package config
 
 import (
+	"log/slog"
+
 	"github.com/m-mizutani/goerr"
 	"github.com/secmon-lab/nydus/pkg/adapter/abs"
 	"github.com/secmon-lab/nydus/pkg/domain/context/logging"
@@ -48,6 +50,15 @@ func (x *Azure) Flags() []cli.Flag {
 			Destination: &x.clientSecret,
 		},
 	}
+}
+
+func (x Azure) LogValue() slog.Value {
+	return slog.GroupValue(
+		slog.Bool("enable", x.enable),
+		slog.String("tenantID", x.tenantID),
+		slog.String("clientID", x.clientID),
+		slog.Int("clientSecret(len)", len(x.clientSecret)),
+	)
 }
 
 func (x *Azure) NewClient() (*abs.Client, error) {
