@@ -10,7 +10,7 @@ import (
 	"github.com/secmon-lab/nydus/pkg/domain/model"
 )
 
-func (x *UseCase) Route(ctx context.Context, input *model.RouteInput) error {
+func (x *UseCase) Route(ctx context.Context, input *model.RouteInput) (err error) {
 	var output model.RouteOutput
 
 	logger := logging.From(ctx)
@@ -38,7 +38,7 @@ func (x *UseCase) Route(ctx context.Context, input *model.RouteInput) error {
 			return goerr.Wrap(err, "failed to create writer to Google Cloud Storage").With("destination", dst)
 		}
 		defer func() {
-			if err := w.Close(); err != nil {
+			if err = w.Close(); err != nil {
 				logger.Warn("Failed to close writer", "destination", dst, "error", err)
 			}
 		}()
