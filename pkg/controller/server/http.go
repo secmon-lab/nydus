@@ -58,7 +58,7 @@ func middlewareLogging(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		reqID := uuid.NewString()
 		ctx := r.Context()
-		logger := logging.From(ctx).With("reqID", reqID)
+		logger := logging.From(ctx).With("request_id", reqID)
 
 		ctx = logging.Inject(ctx, logger)
 
@@ -70,6 +70,7 @@ func middlewareLogging(next http.Handler) http.Handler {
 			"path", r.URL.Path,
 			"status", sw.status,
 			"remote_addr", r.RemoteAddr,
+			"header", r.Header,
 			"user_agent", r.UserAgent(),
 		)
 	})
