@@ -47,6 +47,20 @@ type CloudEventSchema struct {
 	Type        string `json:"type"`
 }
 
+type CloudEventValidation struct {
+	Data struct {
+		ValidationCode string `json:"validationCode"`
+		ValidationURL  string `json:"validationUrl"`
+	} `json:"data"`
+	DataVersion     string `json:"dataVersion"`
+	EventTime       string `json:"eventTime"`
+	EventType       string `json:"eventType"`
+	ID              string `json:"id"`
+	MetadataVersion string `json:"metadataVersion"`
+	Subject         string `json:"subject"`
+	Topic           string `json:"topic"`
+}
+
 type GoogleCloudStorageEvent struct {
 	Event  GooglePubSubEvent        `json:"event"`
 	Object GoogleCloudStorageObject `json:"object"`

@@ -78,7 +78,6 @@ func middlewareLogging(next http.Handler) http.Handler {
 
 func handleAzureEventGridMessage(uc interfaces.UseCase) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var ev model.CloudEventSchema
 		logger := logging.From(r.Context())
 
 		// Do not use json.Decoder to avoid missing the request body for logging
@@ -89,6 +88,24 @@ func handleAzureEventGridMessage(uc interfaces.UseCase) http.HandlerFunc {
 			return
 		}
 
+		if r.Header.Get("Aeg-Event-Type") == "SubscriptionValidation" {
+			var msgs []model.CloudEventValidation
+
+			if err := json.Unmarshal(body, &msgs); err != nil {
+				logger.Warn("failed to unmarshal request body from Azure", "err", err, "body", string(body))
+				http.Error(w, "bad request", http.StatusBadRequest)
+			}
+
+			for _, msg := range msgs {
+				if err := uc.ValidateAzureEventGrid(r.Context(), msg.Data.ValidationCode); err != nil {
+					http.Error(w, "bad request", http.StatusBadRequest)
+					return
+				}
+			}
+			return
+		}
+
+		var ev model.CloudEventSchema
 		if err := json.Unmarshal(body, &ev); err != nil {
 			logger.Warn("failed to unmarshal request body from Azure", "err", err, "body", string(body))
 			http.Error(w, "bad request", http.StatusBadRequest)
