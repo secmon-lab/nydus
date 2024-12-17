@@ -97,7 +97,7 @@ func handleAzureEventGridMessage(uc interfaces.UseCase) http.HandlerFunc {
 			}
 
 			for _, msg := range msgs {
-				if err := uc.ValidateAzureEventGrid(r.Context(), msg.Data.ValidationCode); err != nil {
+				if err := uc.ValidateAzureEventGrid(r.Context(), msg.Data.ValidationURL); err != nil {
 					http.Error(w, "bad request", http.StatusBadRequest)
 					return
 				}
