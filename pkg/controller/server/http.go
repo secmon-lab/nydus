@@ -34,9 +34,9 @@ func New(uc interfaces.UseCase) *Server {
 			w.WriteHeader(http.StatusNotImplemented)
 		})
 	})
-	route.Route("/azure/event-grid", func(r chi.Router) {
-		r.Options("/blob-storage", handleAzureEventGridValidate(uc))
-		r.Post("/blob-storage", handleAzureEventGridMessage(uc))
+	route.Route("/azure/cloud-event", func(r chi.Router) {
+		r.Options("/blob-storage", handleAzureCloudEventValidate(uc))
+		r.Post("/blob-storage", handleAzureCloudEventMessage(uc))
 	})
 
 	return &Server{
@@ -76,7 +76,57 @@ func middlewareLogging(next http.Handler) http.Handler {
 	})
 }
 
+/*
+func handleAzureEventGridValidation(w http.ResponseWriter, r *http.Request) {
+	logger := logging.From(r.Context())
+
+	// Do not use json.Decoder to avoid missing the request body for logging
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		logger.Warn("failed to read request body from Azure", "err", err)
+		http.Error(w, "bad request", http.StatusBadRequest)
+		return
+	}
+
+	var msgs []model.CloudEventValidation
+	if err := json.Unmarshal(body, &msgs); err != nil {
+		logger.Warn("failed to unmarshal request body from Azure", "err", err, "body", string(body))
+		http.Error(w, "bad request", http.StatusBadRequest)
+	}
+
+	if len(msgs) != 1 {
+		logger.Warn("unexpected number of validation messages", "messages", msgs)
+		http.Error(w, "bad request", http.StatusBadRequest)
+		return
+	}
+
+	type validationMessage struct {
+		ValidationResponse string `json:"validationResponse"`
+	}
+	resp := validationMessage{
+		ValidationResponse: msgs[0].Data.ValidationCode,
+	}
+	if err := json.NewEncoder(w).Encode(resp); err != nil {
+		logger.Warn("failed to encode response", "err", err)
+		http.Error(w, "internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
 func handleAzureEventGridMessage(uc interfaces.UseCase) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		logger := logging.From(r.Context())
+		if r.Header.Get("Aeg-Event-Type") == "SubscriptionValidation" {
+			handleAzureEventGridValidation(w, r)
+			return
+		}
+	}
+}
+*/
+
+func handleAzureCloudEventMessage(uc interfaces.UseCase) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logger := logging.From(r.Context())
 
@@ -85,23 +135,6 @@ func handleAzureEventGridMessage(uc interfaces.UseCase) http.HandlerFunc {
 		if err != nil {
 			logger.Warn("failed to read request body from Azure", "err", err)
 			http.Error(w, "bad request", http.StatusBadRequest)
-			return
-		}
-
-		if r.Header.Get("Aeg-Event-Type") == "SubscriptionValidation" {
-			var msgs []model.CloudEventValidation
-
-			if err := json.Unmarshal(body, &msgs); err != nil {
-				logger.Warn("failed to unmarshal request body from Azure", "err", err, "body", string(body))
-				http.Error(w, "bad request", http.StatusBadRequest)
-			}
-
-			for _, msg := range msgs {
-				if err := uc.ValidateAzureEventGrid(r.Context(), msg.Data.ValidationURL); err != nil {
-					http.Error(w, "bad request", http.StatusBadRequest)
-					return
-				}
-			}
 			return
 		}
 
@@ -126,14 +159,14 @@ func handleAzureEventGridMessage(uc interfaces.UseCase) http.HandlerFunc {
 	}
 }
 
-func handleAzureEventGridValidate(uc interfaces.UseCase) http.HandlerFunc {
+func handleAzureCloudEventValidate(uc interfaces.UseCase) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Header.Get("Webhook-Request-Origin") != "eventgrid.azure.net" {
 			http.Error(w, "bad request", http.StatusBadRequest)
 			return
 		}
 
-		if err := uc.ValidateAzureEventGrid(r.Context(), r.Header.Get("Webhook-Request-Callback")); err != nil {
+		if err := uc.ValidateAzureCloudEvent(r.Context(), r.Header.Get("Webhook-Request-Callback")); err != nil {
 			http.Error(w, "bad request", http.StatusBadRequest)
 			return
 		}

@@ -11,7 +11,7 @@ import (
 	"github.com/secmon-lab/nydus/pkg/domain/model"
 )
 
-func (x *UseCase) ValidateAzureEventGrid(ctx context.Context, callbackURL string) error {
+func (x *UseCase) ValidateAzureCloudEvent(ctx context.Context, callbackURL string) error {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, callbackURL, nil)
 	if err != nil {
 		return goerr.Wrap(err, "failed to create HTTP request").With("callbackURL", callbackURL)

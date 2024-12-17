@@ -31,7 +31,7 @@ func TestAzureValidation(t *testing.T) {
 	uc := usecase.New(adapter.New(adapter.WithHTTPClient(mock)))
 
 	ctx := context.Background()
-	err := uc.ValidateAzureEventGrid(ctx, testURL)
+	err := uc.ValidateAzureCloudEvent(ctx, testURL)
 	gt.NoError(t, err)
 
 	gt.A(t, mock.requests).Length(1).At(0, func(t testing.TB, v *http.Request) {
