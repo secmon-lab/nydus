@@ -4,7 +4,6 @@ import (
 	"context"
 	"io"
 	"net/http"
-	"net/url"
 	"strings"
 
 	"github.com/m-mizutani/goerr"
@@ -13,21 +12,16 @@ import (
 )
 
 func (x *UseCase) ValidateAzureEventGrid(ctx context.Context, callbackURL string) error {
-	reqURL, err := url.Parse(callbackURL)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, callbackURL, nil)
 	if err != nil {
-		return goerr.Wrap(err, "Failed to parse callbackURL")
+		return goerr.Wrap(err, "failed to create HTTP request").With("callbackURL", callbackURL)
 	}
 
 	// Example:
 	// https://rp-japaneast.eventgrid.azure.net:553/eventsubscriptions/my-topic/validate?id=XXXXXXXXX&t=2024-08-25T23:16:11.8746191Z&apiVersion=2023-12-15-preview&token=XXXXXXX%3d
-	if reqURL.Scheme != "https" ||
-		!strings.HasSuffix(reqURL.Hostname(), ".eventgrid.azure.net") {
+	if req.URL.Scheme != "https" ||
+		!strings.HasSuffix(req.URL.Hostname(), ".eventgrid.azure.net") {
 		return goerr.New("Webhook-Request-Callback is invalid")
-	}
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, callbackURL, nil)
-	if err != nil {
-		return goerr.Wrap(err, "failed to create HTTP request").With("callbackURL", callbackURL)
 	}
 
 	resp, err := x.clients.HTTPClient().Do(req)
