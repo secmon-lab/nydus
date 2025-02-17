@@ -3,6 +3,8 @@ package usecase
 import (
 	"context"
 	"io"
+	"os"
+	"strings"
 
 	"github.com/m-mizutani/goerr"
 	"github.com/secmon-lab/nydus/pkg/adapter"
@@ -10,7 +12,19 @@ import (
 	"github.com/secmon-lab/nydus/pkg/domain/model"
 )
 
+func getEnv() map[string]string {
+	envMap := make(map[string]string)
+	for _, env := range os.Environ() {
+		parts := strings.SplitN(env, "=", 2)
+		if len(parts) == 2 {
+			envMap[parts[0]] = parts[1]
+		}
+	}
+	return envMap
+}
+
 func (x *UseCase) Route(ctx context.Context, input *model.RouteInput) (err error) {
+	input.Env = getEnv()
 	var output model.RouteOutput
 
 	logger := logging.From(ctx)
